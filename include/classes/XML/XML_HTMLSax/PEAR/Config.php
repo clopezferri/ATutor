@@ -938,8 +938,7 @@ class PEAR_Config extends PEAR
             return $this->raiseError("PEAR_Config::readConfigFile fopen('$file','r') failed");
         }
         $size = filesize($file);
-        $rt = get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);
+        $rt = 0;
         if (function_exists('file_get_contents')) {
             fclose($fp);
             $contents = file_get_contents($file);
@@ -950,8 +949,6 @@ class PEAR_Config extends PEAR
         if (empty($contents)) {
             return $this->raiseError('Configuration file "' . $file . '" is empty');
         }
-        
-        set_magic_quotes_runtime($rt);
 
         $version = false;
         if (preg_match('/^#PEAR_Config\s+(\S+)\s+/si', $contents, $matches)) {
@@ -2014,7 +2011,7 @@ class PEAR_Config extends PEAR
             if (OS_WINDOWS && preg_match('/^[a-z]:/i', $path)) {
                 if (preg_match('/^[a-z]:/i', $prepend)) {
                     $prepend = substr($prepend, 2);
-                } elseif ($prepend{0} != '\\') {
+                } elseif ($prepend[0] != '\\') {
                     $prepend = "\\$prepend";
                 }
                 $path = substr($path, 0, 2) . $prepend . substr($path, 2);

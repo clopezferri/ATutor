@@ -197,9 +197,9 @@ if ($_SESSION['course_id'] == -1) {
 }
 
 if (isset($_REQUEST['course'])) { // is set guests access protected course
-	$course	= abs($_REQUEST['course']);
+	$course	= intval($_REQUEST['course']);
 } else if (isset($_REQUEST['p_course'])) { // is set when pretty url is turned on, access public course
-	$course	= abs($_REQUEST['p_course']);
+	$course	= intval($_REQUEST['p_course']);
 } else {
 	$course = 0;
 }

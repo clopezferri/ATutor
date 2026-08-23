@@ -44,7 +44,7 @@ if (isset($_POST['delete'])) {
 		}
 		
 		if (strpos($file, $key) !== false) { // found a bug associated with our profile key
-			$delete_store{$file} = $file;
+			$delete_store[$file] = $file;
 		} else {
 			$cnt++;
 		}
@@ -115,7 +115,7 @@ if (isset($_POST['view'])) {
 			}
 		
 			if (strpos($file, $key) !== false) { // found a bug associated with our profile key
-				$log_profile_bugs{$file} = $file;
+				$log_profile_bugs[$file] = $file;
 			}
 					
 		}
@@ -177,7 +177,7 @@ if (isset($_POST['view'])) {
 		}
 		
 		if (strpos($file, $key) !== false) { // found a bug associated with our profile key
-			$delete_store{$file} = $file;
+			$delete_store[$file] = $file;
 		}
 					
 	}

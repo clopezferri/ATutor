@@ -51,6 +51,10 @@ class XML_HTMLSax_Trim {
     * @param string original handler method
     * @access protected
     */
+    function __construct(&$orig_obj, $orig_method) {
+        $this->XML_HTMLSax_Trim($orig_obj, $orig_method);
+    }
+
     function XML_HTMLSax_Trim(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;

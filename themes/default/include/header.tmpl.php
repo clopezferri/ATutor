@@ -378,7 +378,7 @@ global $system_courses, $_custom_css, $db;
     </div>
     
 
-	<?php  if (count($this->sub_level_pages) > 1 || $this->sub_level_pages_i > 0): ?>
+	<?php  if ((isset($this->sub_level_pages) && is_array($this->sub_level_pages) ? count($this->sub_level_pages) : 0) > 1 || ($this->sub_level_pages_i ?? 0) > 0): ?>
 	<div id="lrg_subnav">
 		<div id="subnavlistcontainer" role="navigation" aria-label="<?php echo _AT('sub'); ?>">
 			<div id="subnavbacktopage">
@@ -391,7 +391,7 @@ global $system_courses, $_custom_css, $db;
 			<ul id="subnavlist" role="navigation"  aria-label="<?php echo _AT('tools'); ?>">
 			<?php 
 
-			$num_pages = count($this->sub_level_pages); 
+			$num_pages = count($this->sub_level_pages ?? []); 
 
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
@@ -413,9 +413,9 @@ global $system_courses, $_custom_css, $db;
 			</ul>		
 
 			<?php 
-			$num_pages_i = count($this->sub_level_pages_i); 
+			$num_pages_i = count($this->sub_level_pages_i ?? []); 
 			if(is_array($this->sub_level_pages_i)){
-			    $num_pages_i = count($this->sub_level_pages_i); 
+			    $num_pages_i = count($this->sub_level_pages_i ?? []); 
 			    if(intval($_GET['fid'])){
 			        $fcid = "?fid=".$_GET['fid'];
 			    }

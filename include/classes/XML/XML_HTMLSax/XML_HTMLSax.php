@@ -156,6 +156,10 @@ class XML_HTMLSax_StateParser {
     * @var XML_HTMLSax instance of user front end class
     * @access protected
     */
+    function __construct (& $htmlsax) {
+        $this->XML_HTMLSax_StateParser($htmlsax);
+    }
+
     function XML_HTMLSax_StateParser (& $htmlsax) {
         $this->htmlsax = & $htmlsax;
         $this->State[XML_HTMLSAX_STATE_START] = new XML_HTMLSax_StartingState();
@@ -194,7 +198,7 @@ class XML_HTMLSax_StateParser {
     */
     function scanCharacter() {
         if ($this->position < $this->length) {
-            return $this->rawtext{$this->position++};
+            return $this->rawtext[$this->position++];
         }
     }
 
@@ -339,7 +343,7 @@ class XML_HTMLSax_StateParser_Lt430 extends XML_HTMLSax_StateParser {
     */
     function scanUntilCharacters($string) {
         $startpos = $this->position;
-        while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === FALSE) {
+        while ($this->position < $this->length && strpos($string, $this->rawtext[$this->position]) === FALSE) {
             $this->position++;
         }
         return substr($this->rawtext, $startpos, $this->position - $startpos);
@@ -352,7 +356,7 @@ class XML_HTMLSax_StateParser_Lt430 extends XML_HTMLSax_StateParser {
     */
     function ignoreWhitespace() {
         while ($this->position < $this->length && 
-            strpos(" \n\r\t", $this->rawtext{$this->position}) !== FALSE) {
+            strpos(" \n\r\t", $this->rawtext[$this->position]) !== FALSE) {
             $this->position++;
         }
     }

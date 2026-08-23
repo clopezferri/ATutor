@@ -91,7 +91,7 @@ function my_null_slashes($string) {
     return $string;
 }
 
-if ( get_magic_quotes_gpc() == 1 ) {
+if ( function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() == 1 ) {
     $addslashes   = 'my_add_null_slashes';
     $stripslashes = 'stripslashes';
 } else {
@@ -131,10 +131,10 @@ function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $ca
     return execute_sql($sql, $oneRow, $callback_func, $array_type);
 
 }
-function queryDButf8($query, $params=array(), $oneRow = true, $sanitize, $db, $array_type = MYSQL_ASSOC) {
+function queryDButf8($query, $params=array(), $oneRow = true, $sanitize, $db, $array_type = MYSQLI_ASSOC) {
     global $msg, $addslashes;
 
-    if ($sanitize) {
+    if ($sanitize && is_array($params)) {
         foreach($params as $i=>$value) {
          if(defined('MYSQLI_ENABLED')){  
              $value = $addslashes(htmlspecialchars_decode($value, ENT_QUOTES));  
@@ -144,6 +144,10 @@ function queryDButf8($query, $params=array(), $oneRow = true, $sanitize, $db, $a
              $params[$i] = $addslashes($value);           
             }
         }
+    }
+
+    if (!is_array($params)) {
+        $params = array($params);
     }
 
     $sql = vsprintf($query, $params);

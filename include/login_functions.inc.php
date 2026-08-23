@@ -69,12 +69,22 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
     $this_login        = $_POST['form_login'];
     $auto_login        = isset($_POST['auto']) ? intval($_POST['auto']) : 0;
     $used_cookie    = false;
+
+    /* Fallback: if the JS hashing did not run, hash the plain password server-side */
+    if ($this_password == '' && isset($_POST['form_password']) && $_POST['form_password'] != '') {
+        $this_password = sha1($_POST['form_password']);
+    }
 } else if (isset($_POST['submit1'])) {
     /* form post login on autoenroll registration*/
     $this_password = $_POST['form1_password_hidden'];
     $this_login        = $_POST['form1_login'];
     $auto_login        = isset($_POST['auto']) ? intval($_POST['auto']) : 0;
     $used_cookie    = false;
+
+    /* Fallback: if the JS hashing did not run, hash the plain password server-side */
+    if ($this_password == '' && isset($_POST['form1_password']) && $_POST['form1_password'] != '') {
+        $this_password = sha1($_POST['form1_password']);
+    }
 }
 
 if (isset($this_login, $this_password)) {
@@ -115,7 +125,7 @@ if (isset($this_login, $this_password)) {
         $saltedPassword = hash('sha512', $cookieRow['password'] . hash('sha512', $cookieRow['last_login']));
         $row = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status, last_login FROM %smembers WHERE login='%s' AND '%s'='%s'", array(TABLE_PREFIX, $this_login, $saltedPassword, $this_password), TRUE);
     } else {
-        $row = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM %smembers WHERE (login='%s' OR email='%s') AND SHA1(CONCAT(password, '%s'))='%s'", array(TABLE_PREFIX, $this_login, $this_login, $_SESSION['token'], $this_password), TRUE);
+        $row = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM %smembers WHERE (login='%s' OR email='%s') AND (SHA1(CONCAT(password, '%s'))='%s' OR password='%s')", array(TABLE_PREFIX, $this_login, $this_login, $_SESSION['token'], $this_password, $this_password), TRUE);
     }
     //$row = $rows;
 
@@ -172,7 +182,7 @@ if (isset($this_login, $this_password)) {
         }
     } else {
         // check if it's an admin login.
-        $rows = queryDB("SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND SHA1(CONCAT(password, '%s'))='%s' AND `privileges`>0", array(TABLE_PREFIX, $this_login, $_SESSION['token'], $this_password));
+        $rows = queryDB("SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND (SHA1(CONCAT(password, '%s'))='%s' OR password='%s') AND `privileges`>0", array(TABLE_PREFIX, $this_login, $_SESSION['token'], $this_password, $this_password));
 
         if ($row = $rows[0]) {
             $sql = "UPDATE %sadmins SET last_login=NOW() WHERE login='%s'";

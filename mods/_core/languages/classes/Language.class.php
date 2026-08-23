@@ -36,6 +36,11 @@ class Language {
 	var $db;
 
 	// constructor
+	function __construct($language_row) {
+		$this->Language($language_row);
+	}
+
+	// constructor (PHP 4 style, kept for compatibility)
 	function Language($language_row) {
 		global $db;
 

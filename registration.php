@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
             $course_names = stripslashes($course_names[0]['title']);
         }
         if($course_names != "")
-        $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
+        $msg->addFeedback(array('AT_FEEDBACK_LOGIN_SUCCESS_AUTO_ENROLL',$course_names));
         header('Location: index.php');
         exit;
     }
@@ -247,27 +247,27 @@ if (isset($_POST['cancel'])) {
 		               inbox_notify,
 		               private_email,
 		               last_login)
-		       VALUES ('$_POST[login]',
-		               '$_POST[password]',
-		               '$_POST[email]',
-		               '$_POST[website]',
-		               '$_POST[first_name]',
-		               '$_POST[second_name]',
-		               '$_POST[last_name]',
+		       VALUES ('{$_POST['login']}',
+		               '{$_POST['password']}',
+		               '{$_POST['email']}',
+		               '{$_POST['website']}',
+		               '{$_POST['first_name']}',
+		               '{$_POST['second_name']}',
+		               '{$_POST['last_name']}',
 		               '$dob',
-		               '$_POST[gender]',
-		               '$_POST[address]',
-		               '$_POST[postal]',
-		               '$_POST[city]',
-		               '$_POST[province]',
-		               '$_POST[country]',
-		               '$_POST[phone]',
+		               '{$_POST['gender']}',
+		               '{$_POST['address']}',
+		               '{$_POST['postal']}',
+		               '{$_POST['city']}',
+		               '{$_POST['province']}',
+		               '{$_POST['country']}',
+		               '{$_POST['phone']}',
 		               $status,
-		               '$_config[pref_defaults]',
+		               '{$_config['pref_defaults']}',
 		               '$now',
-		               '$_SESSION[lang]',
-		               $_config[pref_inbox_notify],
-		               $_POST[private_email],
+		               '{$_SESSION['lang']}',
+		               {$_config['pref_inbox_notify']},
+		               {$_POST['private_email']},
 		               NULL)";
 
 
@@ -332,16 +332,16 @@ if (isset($_POST['cancel'])) {
 			         WHERE member_id=%d";
 			queryDB($sql, array(TABLE_PREFIX, $member_id));
 
-        $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
+        $msg->addFeedback(array('AT_FEEDBACK_LOGIN_SUCCESS_AUTO_ENROLL',$course_names));
 
 			// auto login
 			$_SESSION['valid_user'] = true;
 			$_SESSION['member_id']	= $m_id;
 			//$_SESSION['course_id']  = 0;
-			$_SESSION['login']		= $_POST[login];
-			assign_session_prefs(unserialize(stripslashes($_config[pref_defaults])), 1);
+			$_SESSION['login']		= $_POST['login'];
+			assign_session_prefs(unserialize(stripslashes($_config['pref_defaults'])), 1);
 			$_SESSION['is_guest']	= 0;
-			$_SESSION['lang']		= $_SESSION[lang];
+			$_SESSION['lang']		= $_SESSION['lang'];
 			session_write_close();
 
             if(isset($_SESSION['course_id'])){

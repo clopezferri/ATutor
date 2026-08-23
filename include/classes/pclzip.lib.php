@@ -5340,12 +5340,7 @@
 	}
 
 	// ----- Get and memorize the magic_quote value
-	$this->magic_quotes_status = @get_magic_quotes_runtime();
-
-	// ----- Disable magic_quotes
-	if ($this->magic_quotes_status == 1) {
-	  @set_magic_quotes_runtime(0);
-	}
+	$this->magic_quotes_status = 0;
 
     // ----- Return
     return $v_result;

@@ -197,7 +197,8 @@ class SqlUtility
 				if($prefixed_query[1] == 'CREATE TABLE' || $prefixed_query[1] == 'CREATE TABLE IF NOT EXISTS')
 				{
 				    $result = queryDB($prefixed_query[0], array(), FALSE, FALSE);
-                    if(count($result) > 0){
+                    $query_ok = is_array($result) ? (count($result) > 0) : ($result !== false && $result >= 0);
+                    if($query_ok){
 						if ($in_plain_msg) {
 							$progress[] = 'Table <b>'.$table . '</b> created successfully.';
 						} else {

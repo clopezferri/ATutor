@@ -13,6 +13,17 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+/* PHP 8: undefined constants are fatal. Define a fallback so the
+ * installer can load this file before config.inc.php is available.
+ * The main application always loads config.inc.php first. */
+if (!defined('AT_CONTENT_DIR')) {
+	define('AT_CONTENT_DIR', '');
+}
+
+if (!defined('DEFAULT_CHARSET')) {
+	define('DEFAULT_CHARSET', 'utf-8');
+}
+
 /***************
  * constants
  ******/

@@ -66,7 +66,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 
 			if (is_dir($dir_ . '/' . $file)) {
-				$logdirs{$file} = $file; // store the day log dir
+				$logdirs[$file] = $file; // store the day log dir
 			}
 		}
 		closedir($dir); // clean it up
@@ -99,7 +99,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					if (strpos($file, 'profile')	!== false) { // found a profile, store its md5 key identifier
 						$tmp_ = substr($file, strpos($file, '_') + 1);
 						$tmp_ = substr($tmp_, 0, strpos($tmp_, '.log.php'));
-						$log_profiles{$file} = $tmp_;
+						$log_profiles[$file] = $tmp_;
 					}
 					
 				}
@@ -142,7 +142,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					closedir($dir);
 
 					// store the amount of bugs associated with profile
-					$log_profiles_bug_count{$val}[$val_] = $count;
+					$log_profiles_bug_count[$val][$val_] = $count;
 				}
 				$log_profiles = array();
 			}

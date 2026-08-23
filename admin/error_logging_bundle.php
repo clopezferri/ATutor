@@ -38,7 +38,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 			$date = substr($work, 0, strpos($work, ':'));
 			$id = substr($work, strpos($work, ':') + 1);
 			/* Parse the variable */
-			$profiles{$id} = $date;
+			$profiles[$id] = $date;
 		}
 	}
 	
@@ -71,7 +71,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 		
 					// any files mathcing the $elem key correspond to this profile
 					if (strpos($file, $elem)	!== false) { 
-						$store_some{$dir_ . '/'.  $val . '/' . $file} = $file;
+						$store_some[$dir_ . '/'.  $val . '/' . $file] = $file;
 					}
 					
 				}
@@ -173,7 +173,7 @@ $msg->printAll();
 			}
 
 			if (is_dir($dir_ . '/' . $file)) {
-				$logdirs{$file} = $file; // store the day log dir
+				$logdirs[$file] = $file; // store the day log dir
 			}
 		}
 		closedir($dir); // clean it up
@@ -206,7 +206,7 @@ $msg->printAll();
 					if (strpos($file, 'profile')	!== false) { // found a profile, store its md5 key identifier
 						$tmp_ = substr($file, strpos($file, '_') + 1);
 						$tmp_ = substr($tmp_, 0, strpos($tmp_, '.log.php'));
-						$log_profiles{$file} = $tmp_;
+						$log_profiles[$file] = $tmp_;
 					}
 					
 				}
@@ -249,7 +249,7 @@ $msg->printAll();
 					closedir($dir);
 
 					// store the amount of bugs associated with profile
-					$log_profiles_bug_count{$val}[$val_] = $count;
+					$log_profiles_bug_count[$val][$val_] = $count;
 				}
 				$log_profiles = array();
 			}

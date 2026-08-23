@@ -62,7 +62,7 @@ function utf8_decodeFN($file){
  */
 function utf8_isASCII($str){
   for($i=0; $i<strlen($str); $i++){
-    if(ord($str{$i}) >127) return false;
+    if(ord($str[$i]) >127) return false;
   }
   return true;
 }
@@ -77,8 +77,8 @@ function utf8_isASCII($str){
 function utf8_strip($str){
   $ascii = '';
   for($i=0; $i<strlen($str); $i++){
-    if(ord($str{$i}) <128){
-      $ascii .= $str{$i};
+    if(ord($str[$i]) <128){
+      $ascii .= $str[$i];
     }
   }
   return $ascii;
@@ -551,7 +551,7 @@ function utf8_to_unicode($str,$strict=false) {
 
     for($i = 0; $i < $len; $i++) {
 
-        $in = ord($str{$i});
+        $in = ord($str[$i]);
 
         if ( $mState == 0) {
 

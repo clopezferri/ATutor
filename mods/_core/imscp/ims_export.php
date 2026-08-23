@@ -153,6 +153,7 @@ $zipfile->create_dir('resources/');
 
 */
 class MyHandler {
+    function __construct(){}
     function MyHandler(){}
     function openHandler(& $parser,$name,$attrs) {
 		global $my_files;
